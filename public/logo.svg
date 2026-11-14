@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="CartNest">
+  <rect width="512" height="512" rx="112" fill="#3B4FD8"/>
+  <path d="M132 194h248l-30 158a66 66 0 0 1-65 54h-58a66 66 0 0 1-65-54l-30-158Z" fill="#FFFFFF"/>
+  <path d="M196 196v-26a60 60 0 0 1 120 0v26" fill="none" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round"/>
+  <path d="M204 262c13 28 39 44 52 44s39-16 52-44" fill="none" stroke="#3B4FD8" stroke-width="20" stroke-linecap="round"/>
+</svg>

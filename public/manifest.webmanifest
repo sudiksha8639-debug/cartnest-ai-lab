@@ -1,0 +1,17 @@
+{
+  "name": "CartNest — Demo Storefront",
+  "short_name": "CartNest",
+  "description": "A full-stack demo e-commerce storefront for privacy-first browser agent testing. Synthetic data, simulated payments.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbfbf8",
+  "theme_color": "#3B4FD8",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
