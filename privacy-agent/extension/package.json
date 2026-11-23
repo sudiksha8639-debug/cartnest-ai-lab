@@ -1,0 +1,24 @@
+{
+  "name": "cartnest-privacy-agent-extension",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "validate": "node scripts/validate-extension.mjs",
+    "test": "bun test",
+    "eval": "bun run tests/evaluate.ts"
+  },
+  "dependencies": {
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.287",
+    "@types/jsdom": "^21.1.7",
+    "bun-types": "^1.1.38",
+    "esbuild": "^0.24.2",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.7.2"
+  }
+}

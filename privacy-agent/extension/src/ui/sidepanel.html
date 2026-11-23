@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CartNest Privacy Agent</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 3 5 6v5c0 4.4 3 8.2 7 9.5 4-1.3 7-5.1 7-9.5V6l-7-3Z" />
+            <path d="m9.2 11.8 1.9 1.9 3.8-4.1" />
+          </svg>
+        </span>
+        <div>
+          <p class="brand-title">Privacy Agent</p>
+          <p class="brand-sub">Local-first shopping automation</p>
+        </div>
+      </div>
+      <span id="connection-pill" class="pill neutral">Connecting</span>
+    </header>
+
+    <main>
+      <section class="card tab-card" aria-labelledby="tab-title">
+        <div class="card-head">
+          <h2 id="tab-title">Current page</h2>
+          <span id="origin-status" class="pill neutral">Checking</span>
+        </div>
+        <p id="tab-origin" class="tab-origin">No active page</p>
+        <p id="tab-detail" class="muted small">Open CartNest in the active tab.</p>
+      </section>
+
+      <section class="card" aria-labelledby="task-title">
+        <div class="card-head">
+          <h2 id="task-title">Task</h2>
+          <span class="chip">Natural language</span>
+        </div>
+        <label class="sr-only" for="task-input">Task for the agent</label>
+        <textarea
+          id="task-input"
+          data-testid="task-input"
+          rows="3"
+          maxlength="600"
+          placeholder="Find the best-rated wireless headphones under ₹3,000 and add them to my cart."
+        ></textarea>
+        <button id="example-task" class="text-button" type="button">Use the demonstration task</button>
+        <div class="button-row">
+          <button id="run-button" class="primary" type="button" data-testid="start-agent">
+            Start agent
+          </button>
+          <button id="stop-button" class="secondary" type="button" disabled>Stop</button>
+        </div>
+        <p id="run-error" class="error-banner" role="alert" hidden></p>
+      </section>
+
+      <section class="card status-card" aria-labelledby="status-title">
+        <div class="card-head">
+          <h2 id="status-title">Run status</h2>
+          <span id="step-pill" class="pill neutral">Idle</span>
+        </div>
+        <div class="status-line">
+          <span id="status-dot" class="status-dot idle" aria-hidden="true"></span>
+          <p id="status-text">Ready. The page is inspected locally before anything is sent.</p>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="privacy-title">
+        <div class="card-head">
+          <h2 id="privacy-title">Privacy report</h2>
+          <span id="gate-pill" class="pill neutral">Gate idle</span>
+        </div>
+        <div class="metrics">
+          <div><span id="metric-elements">—</span><small>Elements inspected</small></div>
+          <div><span id="metric-redactions">—</span><small>Values redacted</small></div>
+          <div><span id="metric-excluded">—</span><small>Blocks excluded</small></div>
+          <div><span id="metric-payload">—</span><small>Payload bytes</small></div>
+        </div>
+        <div id="pii-categories" class="category-list" aria-live="polite"></div>
+        <div class="backend-row">
+          <span class="muted small">Backend</span>
+          <span id="backend-status" class="small">No request sent</span>
+        </div>
+        <p class="security-note">
+          Raw page text never leaves this browser. Only the minimized, sanitized payload is sent to
+          the configured planner.
+        </p>
+      </section>
+
+      <section id="approval-card" class="card approval" aria-labelledby="approval-title" hidden>
+        <div class="card-head">
+          <h2 id="approval-title">Sensitive entry requires approval</h2>
+          <span class="pill warn">Default deny</span>
+        </div>
+        <dl class="approval-grid">
+          <div><dt>Destination</dt><dd id="approval-origin">—</dd></div>
+          <div><dt>Field</dt><dd id="approval-field">—</dd></div>
+          <div><dt>Data type</dt><dd id="approval-type">—</dd></div>
+          <div><dt>Value</dt><dd id="approval-masked">—</dd></div>
+        </dl>
+        <p class="muted small">
+          This approval is for one field and one action only. It is not reused on another page or
+          action. The actual value is never sent to the AI backend.
+        </p>
+        <div class="button-row">
+          <button id="approve-button" class="primary" type="button">Approve once</button>
+          <button id="deny-button" class="secondary" type="button">Deny</button>
+        </div>
+      </section>
+
+      <section id="completion-card" class="card completion" aria-labelledby="completion-title" hidden>
+        <div class="card-head">
+          <h2 id="completion-title">Completion</h2>
+          <span id="verified-pill" class="pill neutral">Unverified</span>
+        </div>
+        <p id="completion-text"></p>
+        <p class="muted small">Checkout and payment are never automated.</p>
+      </section>
+
+      <section class="card" aria-labelledby="actions-title">
+        <div class="card-head">
+          <h2 id="actions-title">Action history</h2>
+          <span id="action-count" class="chip">0 actions</span>
+        </div>
+        <ol id="action-list" class="action-list">
+          <li class="empty-state">No actions yet.</li>
+        </ol>
+      </section>
+
+      <details id="settings" class="card settings">
+        <summary>Connection and approved origins</summary>
+        <div class="settings-body">
+          <label for="backend-url">Backend endpoint</label>
+          <input id="backend-url" type="url" spellcheck="false" placeholder="http://localhost:8000" />
+          <button id="save-backend" class="secondary small-button" type="button">Save endpoint</button>
+          <p id="settings-status" class="muted small" role="status"></p>
+
+          <hr />
+          <p class="settings-label">Approved page origins</p>
+          <ul id="origin-list" class="origin-list"></ul>
+          <label for="origin-input">Approve another origin</label>
+          <input id="origin-input" type="url" spellcheck="false" placeholder="https://your-cartnest-preview.example" />
+          <p class="muted small">
+            Chrome will ask you to grant access to that site. Only add the CartNest origin you are
+            testing.
+          </p>
+          <button id="add-origin" class="secondary small-button" type="button">Add origin</button>
+        </div>
+      </details>
+
+      <footer>
+        <p>
+          CartNest demo · Local privacy boundary · No passwords, OTPs, card or banking values are
+          extracted or auto-filled.
+        </p>
+      </footer>
+    </main>
+
+    <script src="sidepanel.js"></script>
+  </body>
+</html>

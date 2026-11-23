@@ -1,0 +1,11 @@
+node_modules/
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+dist/
+.env
+.env.*
+!env.example
+deliverables/*.zip
+.DS_Store

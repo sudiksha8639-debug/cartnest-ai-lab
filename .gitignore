@@ -1,11 +1,6 @@
-.env.local
-node_modules
-dist
-
-# Environment files and secrets
 .env
 .env.*
 !.env.example
-
-# macOS
+node_modules
+dist
 .DS_Store
